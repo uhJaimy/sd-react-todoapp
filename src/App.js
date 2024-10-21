@@ -1,4 +1,3 @@
-import deletebutton from './delete.png';
 import './App.css';
 
 function App() {
