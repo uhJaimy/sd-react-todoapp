@@ -40,8 +40,8 @@ function App() {
     setTasks(tasks.map(task => task.id === taskId ? { ...task, highPriority: !task.highPriority } : task));
   };
 
-  const markAsCompleted = (taskId) => {
-    setTasks(tasks.map(task => task.id === taskId ? { ...task, completed: true } : task));
+  const toggleCompleted = (taskId) => {
+    setTasks(tasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task));
   };
 
   const handleDragStart = (task) => {
@@ -95,8 +95,8 @@ function App() {
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
               <div className="buttons">
+                <button onClick={() => toggleCompleted(task.id)}>Toggle Complete</button>
                 <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
-                <button onClick={() => markAsCompleted(task.id)}>Mark as Completed</button>
                 <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
             </div>
@@ -117,8 +117,8 @@ function App() {
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
               <div className="buttons">
+                <button onClick={() => toggleCompleted(task.id)}>Toggle Complete</button>
                 <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
-                <button onClick={() => markAsCompleted(task.id)}>Mark as Completed</button>
                 <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
             </div>
@@ -139,6 +139,7 @@ function App() {
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
               <div className="buttons">
+                <button onClick={() => toggleCompleted(task.id)}>Toggle Complete</button>
                 <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
             </div>
