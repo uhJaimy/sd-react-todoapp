@@ -47,6 +47,9 @@ div.categories div.tasks div.task:last-child {
 div.categories div.tasks div.task h3 {
   margin-bottom: 1rem;
 }
+div.categories div.tasks div.task p {
+  margin-bottom: 1rem;
+}
 div.categories div.tasks div.task div.buttons {
   display: flex; justify-content: space-between;
 }
