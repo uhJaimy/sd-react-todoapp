@@ -95,7 +95,7 @@ function App() {
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
               <div className="buttons">
-                <button onClick={() => toggleCompleted(task.id)}>Toggle Complete</button>
+                <button onClick={() => toggleCompleted(task.id)}>Complete</button>
                 <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
                 <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
@@ -117,7 +117,7 @@ function App() {
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
               <div className="buttons">
-                <button onClick={() => toggleCompleted(task.id)}>Toggle Complete</button>
+                <button onClick={() => toggleCompleted(task.id)}>Complete</button>
                 <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
                 <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
@@ -139,7 +139,7 @@ function App() {
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
               <div className="buttons">
-                <button onClick={() => toggleCompleted(task.id)}>Toggle Complete</button>
+                <button onClick={() => toggleCompleted(task.id)}>Uncomplete</button>
                 <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
             </div>
