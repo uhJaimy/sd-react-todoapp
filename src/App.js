@@ -94,9 +94,11 @@ function App() {
             >
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
-              <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
-              <button onClick={() => markAsCompleted(task.id)}>Mark as Completed</button>
-              <button onClick={() => deleteTask(task.id)}>Delete</button>
+              <div className="buttons">
+                <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
+                <button onClick={() => markAsCompleted(task.id)}>Mark as Completed</button>
+                <button onClick={() => deleteTask(task.id)}>Delete</button>
+              </div>
             </div>
           ))}
         </div>
@@ -114,9 +116,11 @@ function App() {
             >
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
-              <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
-              <button onClick={() => markAsCompleted(task.id)}>Mark as Completed</button>
-              <button onClick={() => deleteTask(task.id)}>Delete</button>
+              <div className="buttons">
+                <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
+                <button onClick={() => markAsCompleted(task.id)}>Mark as Completed</button>
+                <button onClick={() => deleteTask(task.id)}>Delete</button>
+              </div>
             </div>
           ))}
         </div>
@@ -134,7 +138,9 @@ function App() {
             >
               <h3>{task.name}</h3>
               <p className="description">{task.description}</p>
-              <button onClick={() => deleteTask(task.id)}>Delete</button>
+              <div className="buttons">
+                <button onClick={() => deleteTask(task.id)}>Delete</button>
+              </div>
             </div>
           ))}
         </div>
