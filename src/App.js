@@ -33,7 +33,9 @@ function App() {
   };
 
   const deleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      setTasks(tasks.filter(task => task.id !== taskId));
+    }
   };
 
   const togglePriority = (taskId) => {
@@ -58,7 +60,9 @@ function App() {
   };
 
   const clearAll = () => {
-    setTasks([]);
+    if (window.confirm('Are you sure you want to delete all tasks?')) {
+      setTasks([]); 
+    }
   };
 
   return (
