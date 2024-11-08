@@ -78,7 +78,7 @@ function App() {
   const startEdit = (task) => {
     setEditTaskId(task.id);
     setEditTaskName(task.name);
-    setEditTaskDesc(task.desc);
+    setEditTaskDesc(task.description);
     setEditTaskColor(task.backgroundColor);
   };
 
@@ -127,10 +127,12 @@ function App() {
               {editTaskId === task.id ? (
                 <>
                   <input
+                    placeholder="Task Name"
                     value={editTaskName}
                     onChange={(e) => setEditTaskName(e.target.value)}
                   />
                   <input
+                    placeholder="Task Description"
                     value={editTaskDesc}
                     onChange={(e) => setEditTaskDesc(e.target.value)}
                   />
@@ -169,10 +171,12 @@ function App() {
               {editTaskId === task.id ? (
                 <>
                   <input
+                    placeholder="Task Name"
                     value={editTaskName}
                     onChange={(e) => setEditTaskName(e.target.value)}
                   />
                   <input
+                    placeholder="Task Description"
                     value={editTaskDesc}
                     onChange={(e) => setEditTaskDesc(e.target.value)}
                   />
@@ -211,10 +215,12 @@ function App() {
               {editTaskId === task.id ? (
                 <>
                   <input
+                    placeholder="Task Name"
                     value={editTaskName}
                     onChange={(e) => setEditTaskName(e.target.value)}
                   />
                   <input
+                    placeholder="Task Description"
                     value={editTaskDesc}
                     onChange={(e) => setEditTaskDesc(e.target.value)}
                   />
