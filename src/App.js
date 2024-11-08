@@ -3,10 +3,18 @@ import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+
   const [newTaskName, setNewTaskName] = useState('');
   const [newTaskDesc, setNewTaskDesc] = useState('');
-  const [draggedTask, setDraggedTask] = useState(null);
+  const [newTaskColor, setNewTaskColor] = useState('#969696');
 
+  const [editTaskId, setEditTaskId] = useState(null);
+  const [editTaskName, setEditTaskName] = useState('');
+  const [editTaskDesc, setEditTaskDesc] = useState('');
+  const [editTaskColor, setEditTaskColor] = useState('#969696');
+
+  const [draggedTask, setDraggedTask] = useState(null);
+  
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     if (savedTasks.length > 0) {
@@ -24,12 +32,14 @@ function App() {
       id: Date.now(),
       name: newTaskName,
       description: newTaskDesc,
+      backgroundColor: newTaskColor,
       highPriority: false,
       completed: false,
     };
     setTasks([...tasks, newTask]);
     setNewTaskName('');
     setNewTaskDesc('');
+    setNewTaskColor('#969696')
   };
 
   const deleteTask = (taskId) => {
@@ -65,6 +75,22 @@ function App() {
     }
   };
 
+  const startEdit = (task) => {
+    setEditTaskId(task.id);
+    setEditTaskName(task.name);
+    setEditTaskDesc(task.desc);
+    setEditTaskColor(task.backgroundColor);
+  };
+
+  const saveTask = (taskId) => {
+    setTasks(tasks.map(task => task.id === taskId? { ...task, name: editTaskName, description: editTaskDesc, backgroundColor: editTaskColor } : task));
+
+    setEditTaskId(null);
+    setEditTaskName('');
+    setEditTaskDesc('');
+    setEditTaskColor('#969696');
+  }
+
   return (
     <div className="container">
       <div className="actions">
@@ -79,6 +105,11 @@ function App() {
             value={newTaskDesc}
             onChange={(e) => setNewTaskDesc(e.target.value)}
           />
+          <input
+            type="color"
+            value={newTaskColor}
+            onChange={(e) => setNewTaskColor(e.target.value)}
+          />
           <button onClick={addTask}>Add Task</button>
         </div>
         <button onClick={clearAll}>Clear All</button>
@@ -88,21 +119,41 @@ function App() {
         <div className="tasks high">
           <h2>High priority tasks</h2>
           {tasks.filter(task => task.highPriority && !task.completed).map(task => (
-            <div
-              key={task.id}
+            <div 
+              key={task.id} 
               className="task"
-              draggable
-              onDragStart={() => handleDragStart(task)}
-              onDrop={() => handleDrop(task)}
-              onDragOver={(e) => e.preventDefault()}
+              style={{ backgroundColor: task.backgroundColor }}  
             >
-              <h3>{task.name}</h3>
-              <p className="description">{task.description}</p>
-              <div className="buttons">
-                <button onClick={() => toggleCompleted(task.id)}>Complete</button>
-                <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
-              </div>
+              {editTaskId === task.id ? (
+                <>
+                  <input
+                    value={editTaskName}
+                    onChange={(e) => setEditTaskName(e.target.value)}
+                  />
+                  <input
+                    value={editTaskDesc}
+                    onChange={(e) => setEditTaskDesc(e.target.value)}
+                  />
+                  <input
+                    type="color"
+                    value={editTaskColor}
+                    onChange={(e) => setEditTaskColor(e.target.value)}
+                  />
+                  <button onClick={() => saveTask(task.id)}>Save</button>
+                  <button onClick={() => setEditTaskId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <h3>{task.name}</h3>
+                  <p className="description">{task.description}</p>
+                  <div className="buttons">
+                    <button onClick={() => toggleCompleted(task.id)}>Complete</button>
+                    <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
+                    <button onClick={() => startEdit(task)}>Edit</button>
+                    <button onClick={() => deleteTask(task.id)}>Delete</button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -110,21 +161,41 @@ function App() {
         <div className="tasks normal">
           <h2>Regular tasks</h2>
           {tasks.filter(task => !task.highPriority && !task.completed).map(task => (
-            <div
-              key={task.id}
+            <div 
+              key={task.id} 
               className="task"
-              draggable
-              onDragStart={() => handleDragStart(task)}
-              onDrop={() => handleDrop(task)}
-              onDragOver={(e) => e.preventDefault()}
+              style={{ backgroundColor: task.backgroundColor }}  
             >
-              <h3>{task.name}</h3>
-              <p className="description">{task.description}</p>
-              <div className="buttons">
-                <button onClick={() => toggleCompleted(task.id)}>Complete</button>
-                <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
-              </div>
+              {editTaskId === task.id ? (
+                <>
+                  <input
+                    value={editTaskName}
+                    onChange={(e) => setEditTaskName(e.target.value)}
+                  />
+                  <input
+                    value={editTaskDesc}
+                    onChange={(e) => setEditTaskDesc(e.target.value)}
+                  />
+                  <input
+                    type="color"
+                    value={editTaskColor}
+                    onChange={(e) => setEditTaskColor(e.target.value)}
+                  />
+                  <button onClick={() => saveTask(task.id)}>Save</button>
+                  <button onClick={() => setEditTaskId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <h3>{task.name}</h3>
+                  <p className="description">{task.description}</p>
+                  <div className="buttons">
+                    <button onClick={() => toggleCompleted(task.id)}>Complete</button>
+                    <button onClick={() => togglePriority(task.id)}>Toggle Priority</button>
+                    <button onClick={() => startEdit(task)}>Edit</button>
+                    <button onClick={() => deleteTask(task.id)}>Delete</button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -132,20 +203,40 @@ function App() {
         <div className="tasks completed">
           <h2>Completed tasks</h2>
           {tasks.filter(task => task.completed).map(task => (
-            <div
-              key={task.id}
+            <div 
+              key={task.id} 
               className="task"
-              draggable
-              onDragStart={() => handleDragStart(task)}
-              onDrop={() => handleDrop(task)}
-              onDragOver={(e) => e.preventDefault()}
+              style={{ backgroundColor: task.backgroundColor }}
             >
-              <h3>{task.name}</h3>
-              <p className="description">{task.description}</p>
-              <div className="buttons">
-                <button onClick={() => toggleCompleted(task.id)}>Uncomplete</button>
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
-              </div>
+              {editTaskId === task.id ? (
+                <>
+                  <input
+                    value={editTaskName}
+                    onChange={(e) => setEditTaskName(e.target.value)}
+                  />
+                  <input
+                    value={editTaskDesc}
+                    onChange={(e) => setEditTaskDesc(e.target.value)}
+                  />
+                  <input
+                    type="color"
+                    value={editTaskColor}
+                    onChange={(e) => setEditTaskColor(e.target.value)}
+                  />
+                  <button onClick={() => saveTask(task.id)}>Save</button>
+                  <button onClick={() => setEditTaskId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <h3>{task.name}</h3>
+                  <p className="description">{task.description}</p>
+                  <div className="buttons">
+                    <button onClick={() => toggleCompleted(task.id)}>Uncomplete</button>
+                    <button onClick={() => startEdit(task)}>Edit</button>
+                    <button onClick={() => deleteTask(task.id)}>Delete</button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
