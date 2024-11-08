@@ -13,8 +13,6 @@ function App() {
   const [editTaskDesc, setEditTaskDesc] = useState('');
   const [editTaskColor, setEditTaskColor] = useState('#969696');
 
-  const [draggedTask, setDraggedTask] = useState(null);
-  
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     if (savedTasks.length > 0) {
@@ -54,19 +52,6 @@ function App() {
 
   const toggleCompleted = (taskId) => {
     setTasks(tasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task));
-  };
-
-  const handleDragStart = (task) => {
-    setDraggedTask(task);
-  };
-
-  const handleDrop = (droppedOnTask) => {
-    const reorderedTasks = tasks.filter(t => t.id !== draggedTask.id);
-    const dropIndex = reorderedTasks.findIndex(t => t.id === droppedOnTask.id);
-    reorderedTasks.splice(dropIndex, 0, draggedTask);
-
-    setTasks(reorderedTasks);
-    setDraggedTask(null);
   };
 
   const clearAll = () => {
@@ -122,7 +107,7 @@ function App() {
             <div 
               key={task.id} 
               className="task"
-              style={{ backgroundColor: task.backgroundColor }}  
+              style={{ backgroundColor: task.backgroundColor }}
             >
               {editTaskId === task.id ? (
                 <>
