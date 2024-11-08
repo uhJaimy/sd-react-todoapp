@@ -42,7 +42,7 @@ div.categories div.tasks h2 {
   margin-bottom: 2rem;
 }
 div.categories div.tasks div.task {
-  background-color: #969696; padding: 1rem; margin-bottom: 2rem;
+  background-color: #969696; padding: 1rem; margin-bottom: 2rem; border-radius: 0.25rem;
 }
 div.categories div.tasks div.task:last-child {
   margin-bottom: 0;
